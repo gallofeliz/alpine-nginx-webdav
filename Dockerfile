@@ -1,4 +1,6 @@
-FROM nginx:stable-alpine
+FROM alpine
+
+RUN apk add --no-cache nginx-mod-http-dav-ext nginx gettext
 
 VOLUME /data
 EXPOSE 80
