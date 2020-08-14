@@ -15,18 +15,17 @@ fi
 
 if [ -n $PUID ]; then
     if [ -n $PGID ]; then
-        adduser --uid $PUID --ingroup group user
+        adduser --disabled-password --uid $PUID --ingroup group user
     else
-        adduser --uid $PUID user
+        adduser --disabled-password --uid $PUID user
     fi
     USER=user
 else
     USER=nginx
 fi
 
-envsubst < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf
+export LOG_FORMAT='$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for"'
 
-cat 'GOOOOO:'
-cat /etc/nginx/nginx.conf
+envsubst < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf
 
 exec nginx -g "daemon off;"
