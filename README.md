@@ -1,19 +1,24 @@
-# alpine-nginx-webdav
-Simple nginx based webdav server for Keepass.
+# Simple and light WEBDAV with alpine+nginx
 
-## How to use this image
+## Example of use
+
 ```console
-$ docker run --name keepass-webdav -p 80:80 -v /path/to/your/keepass/files/:/srv/ -d jbbodart/alpine-nginx-webdav
+$ docker run -p 80:80 -e PUID=1000 -e GUID=1000 -e TZ=Europe/Paris -e DAV_METHODS=off -v /your/directory:/data simple-webdav
 ```
 
-No built-in TLS support. Reverse proxy with TLS recommended
+You need to use reverse-proxy (for example Traefik) for TLS and/or auth.
 
-## Volumes
-- `/srv` - served directory
+## Configuration env var
 
-## Authentication
-To restrict access to only authorized users (recommended), you can define two environment variables: `$USERNAME` and `$PASSWORD`
-```console
-$ docker run --name webdav -p 80:80 -v /path/to/your/keepass/files/:/srv/ -e USERNAME=webdav -e PASSWORD=webdav -d jbbodart/alpine-nginx-webdav
+- PUID: User ID - if your filesystem use 1000, set 1000 ! default to nginx
+- GUID: Group ID ; default empty
+- DAV_METHODS: off or a list of methods ; default to all methods
 
-```
+To do a readonly webdav :
+- Put DAV_METHODS to off
+- mount your volume to :ro
+- use default user (nginx) for example if yours files are yours (100x)
+
+## Notes
+
+This repository is a fork of https://github.com/jbbodart/alpine-nginx-webdav ; But 90% has changed (haha)

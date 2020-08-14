@@ -1,14 +1,9 @@
 FROM nginx:stable-alpine
 
-LABEL maintainer="jbbodart"
-
-RUN apk -U upgrade \
- && apk add --no-cache apache2-utils
-
-VOLUME /srv
+VOLUME /data
 EXPOSE 80
-COPY webdav.conf /etc/nginx/conf.d/default.conf
+COPY webdav.conf /etc/nginx/nginx.template.conf
 
-COPY entrypoint.sh /
-RUN chmod +x entrypoint.sh
-CMD /entrypoint.sh && nginx -g "daemon off;"
+COPY run.sh /
+RUN chmod +x run.sh
+CMD /run.sh
