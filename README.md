@@ -3,7 +3,7 @@
 ## Example of use
 
 ```console
-$ docker run -p 80:80 -e PUID=1000 -e GUID=1000 -e TZ=Europe/Paris -e DAV_METHODS=off -v /your/directory:/data simple-webdav
+$ docker run -p 80:80 -e PUID=1000 -e PGID=1000 -e TZ=Europe/Paris -v /your/directory:/data simple-webdav
 ```
 
 You need to use reverse-proxy (for example Traefik) for TLS and/or auth.
@@ -11,8 +11,8 @@ You need to use reverse-proxy (for example Traefik) for TLS and/or auth.
 ## Configuration env var
 
 - PUID: User ID - if your filesystem use 1000, set 1000 ! default to nginx
-- GUID: Group ID ; default empty
-- DAV_METHODS: off or a list of methods ; default to all methods
+- PGID: Group ID ; default empty
+- DAV_METHODS: off or a list of methods (as nginx conf, so space separated) ; default to all methods
 
 To do a readonly webdav :
 - Put DAV_METHODS to off
