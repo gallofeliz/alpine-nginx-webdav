@@ -1,4 +1,4 @@
-FROM alpine
+FROM python:alpine3.12
 
 RUN apk add --no-cache nginx-mod-http-dav-ext nginx gettext
 
